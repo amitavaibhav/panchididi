@@ -14,7 +14,7 @@
         }
 
         header {
-            background-color: #333;
+            background-color: #c86f0a;
             color: #fff;
             text-align: center;
             padding: 1em 0;
@@ -28,14 +28,15 @@
             background-color: #fff;
         }
 
-        th, td {
+        th,
+        td {
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
 
         th {
-            background-color: #333;
+            background-color: #c86f0a;
             color: #fff;
         }
     </style>
@@ -47,25 +48,50 @@
         <h1>App Statistics</h1>
     </header>
 
-    <table>
+    <table id="appTable">
         <thead>
             <tr>
                 <th>Date</th>
                 <th>Requests</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>2023-01-01</td>
-                <td>100</td>
-            </tr>
-            <tr>
-                <td>2023-01-02</td>
-                <td>150</td>
-            </tr>
-            <!-- Add more rows as needed -->
+        <tbody id="tableBody">
+            <!-- Table body will be populated dynamically -->
         </tbody>
     </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Replace 'your-api-endpoint' with the actual API endpoint
+            const apiEndpoint = atob("aHR0cHM6Ly9wdGFwcC5jby5pbi9nZXRSZXF1ZXN0SW5mbw==");
+
+            // Get the table body element
+            const tableBody = document.getElementById('tableBody');
+
+            // Fetch data from the API
+            fetch(apiEndpoint)
+                .then(response => response.json())
+                .then(data => {
+                    // Assuming 'totalReq' is a property in the API response
+                    const totalReq = data.totalReq;
+
+                    // Loop through the keys of the 'totalReq' object
+                    Object.keys(totalReq).forEach(date => {
+                        // Create a new table row
+                        const row = tableBody.insertRow();
+
+                        // Insert cells with data
+                        const dateCell = row.insertCell(0);
+                        const requestsCell = row.insertCell(1);
+
+                        // Fill in cell content
+                        dateCell.textContent = date;
+                        requestsCell.textContent = totalReq[date];
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
 
 </body>
 

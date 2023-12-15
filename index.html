@@ -39,6 +39,12 @@
             background-color: #c86f0a;
             color: #fff;
         }
+
+        canvas {
+            display: block;
+            margin: 20px auto;
+            max-width: 80%;
+        }
     </style>
 </head>
 
@@ -60,6 +66,9 @@
         </tbody>
     </table>
 
+    <canvas id="barChart"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Replace 'your-api-endpoint' with the actual API endpoint
@@ -87,6 +96,30 @@
                         // Fill in cell content
                         dateCell.textContent = date;
                         requestsCell.textContent = totalReq[date];
+                    });
+
+                    // Chart.js code for creating a bar chart
+                    const labels = Object.keys(totalReq);
+                    const dataValues = Object.values(totalReq);
+
+                    const ctx = document.getElementById('barChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Requests',
+                                data: dataValues,
+                                backgroundColor: '#c86f0a',
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
                     });
                 })
                 .catch(error => console.error('Error fetching data:', error));

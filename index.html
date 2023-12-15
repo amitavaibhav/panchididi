@@ -53,6 +53,7 @@
     <header>
         <h1>App Statistics</h1>
     </header>
+    <canvas id="barChart"></canvas>
 
     <table id="appTable">
         <thead>
@@ -66,7 +67,6 @@
         </tbody>
     </table>
 
-    <canvas id="barChart"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -108,7 +108,7 @@
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'Requests',
+                                label: dataValues,
                                 data: dataValues,
                                 backgroundColor: '#c86f0a',
                             }]

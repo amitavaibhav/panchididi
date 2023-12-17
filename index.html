@@ -85,7 +85,7 @@
                     const totalReq = data.totalReq;
 
                     // Loop through the keys of the 'totalReq' object
-                    Object.keys(totalReq).forEach(date => {
+                    Object.keys(totalReq).reverse().forEach(date => {
                         // Create a new table row
                         const row = tableBody.insertRow();
 
@@ -108,7 +108,7 @@
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: dataValues,
+                                label: "Requests",
                                 data: dataValues,
                                 backgroundColor: '#c86f0a',
                             }]

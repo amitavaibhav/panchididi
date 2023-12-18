@@ -17,16 +17,16 @@
             background-color: #c86f0a;
             color: #fff;
             text-align: center;
-            padding: 1em 0;
+            padding: 0.5em 0;
         }
 
         table {
-            width: 80%;
+            width: 95%;
             margin: 20px auto;
             border-collapse: collapse;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             background-color: #fff;
-            text-align:center;
+            text-align: center;
         }
 
         th,
@@ -34,17 +34,37 @@
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            text-align: center;
         }
 
         th {
             background-color: #c86f0a;
             color: #fff;
+
         }
 
         canvas {
             display: block;
             margin: 20px auto;
-            max-width: 80%;
+            max-width: 95%;
+        }
+
+        footer {
+            background-color: #c86f0a;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        footer a {
+            color: white;
+            margin: 5px;
         }
     </style>
 </head>
@@ -68,6 +88,13 @@
             <!-- Table body will be populated dynamically -->
         </tbody>
     </table>
+    <footer>
+        <!-- Footer content goes here -->
+        &copy; 2023 Quantum Softwares |
+    
+        <a href="https://play.google.com/store/apps/details?id=fastag.status.detail" target="_blank">Download on Google
+            Play</a>
+    </footer>
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -87,7 +114,7 @@
                     const totalReq = data.totalReq;
 
                     // Loop through the keys of the 'totalReq' object
-                    Object.keys(totalReq).reverse().forEach(date => {
+                    Object.keys(totalReq).reverse().slice(0, 10).forEach(date => {
                         // Create a new table row
                         const row = tableBody.insertRow();
 
@@ -99,7 +126,7 @@
                         // Fill in cell content
                         dateCell.textContent = date;
                         requestsCell.textContent = totalReq[date];
-                        amountCell.textContent = `${(totalReq[date]/2200).toFixed(2)}-${(totalReq[date]/2000).toFixed(2)}`
+                        amountCell.textContent = `${(totalReq[date] / 2200).toFixed(2)}$ - ${(totalReq[date] / 2000).toFixed(2)}$`
                     });
 
                     // Chart.js code for creating a bar chart
@@ -107,6 +134,7 @@
                     const dataValues = Object.values(totalReq);
 
                     const ctx = document.getElementById('barChart').getContext('2d');
+                    let delayed;
                     new Chart(ctx, {
                         type: 'bar',
                         data: {
@@ -118,11 +146,27 @@
                             }]
                         },
                         options: {
+                            animation: {
+                                onComplete: () => {
+                                    delayed = true;
+                                },
+                                delay: (context) => {
+                                    let delay = 0;
+                                    if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                                        delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                                    }
+                                    return delay;
+                                },
+                            },
                             scales: {
+                                x: {
+                                    stacked: true,
+                                },
                                 y: {
-                                    beginAtZero: true
+                                    stacked: true
                                 }
                             }
+
                         }
                     });
                 })

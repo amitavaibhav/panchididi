@@ -33,7 +33,7 @@
         td {
             padding: 10px;
             border-bottom: 1px solid #ddd;
-          
+
         }
 
         th {
@@ -111,7 +111,9 @@
                     const totalReq = data.totalReq;
 
                     // Loop through the keys of the 'totalReq' object
-                    Object.keys(totalReq).reverse().slice(0, 10).forEach(date => {
+                    const isMobile = window.innerWidth < 768; // Adjust the breakpoint as needed
+                    const sliceLimit = isMobile ? 7 : 15;
+                    Object.keys(totalReq).reverse().slice(0, sliceLimit).forEach(date => {
                         // Create a new table row
                         const row = tableBody.insertRow();
 

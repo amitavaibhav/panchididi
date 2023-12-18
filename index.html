@@ -60,6 +60,7 @@
             <tr>
                 <th>Date</th>
                 <th>Requests</th>
+                <th>Approx-Income</th>
             </tr>
         </thead>
         <tbody id="tableBody">
@@ -92,10 +93,12 @@
                         // Insert cells with data
                         const dateCell = row.insertCell(0);
                         const requestsCell = row.insertCell(1);
+                        const amountCell = row.insertCell(2);
 
                         // Fill in cell content
                         dateCell.textContent = date;
                         requestsCell.textContent = totalReq[date];
+                        requestsCell.amountCell = `${totalReq[date]/1700}-${totalReq[date]/1400};
                     });
 
                     // Chart.js code for creating a bar chart

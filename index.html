@@ -17,7 +17,7 @@
             background-color: #c86f0a;
             color: #fff;
             text-align: center;
-            padding: 0.3em 0;
+            padding: 0.2em 0;
         }
 
         table {
@@ -65,13 +65,19 @@
             color: white;
             margin: 5px;
         }
+        #timer {
+            color: #fff;
+            font-size: 18px;
+            /* margin-right: 20px; */
+        }
     </style>
 </head>
 
 <body>
 
     <header>
-        <h1>App Statistics</h1>
+        <h2>App Statistics</h2>
+        <div id="timer">00:00:00</div>
     </header>
     <canvas id="barChart"></canvas>
 
@@ -97,6 +103,23 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const timerElement = document.getElementById('timer');
+            let totalUsageTime = 0;
+
+            // Function to update the timer
+            function updateTimer() {
+                totalUsageTime++;
+                const hours = Math.floor(totalUsageTime / 3600);
+                const minutes = Math.floor((totalUsageTime % 3600) / 60);
+                const seconds = totalUsageTime % 60;
+
+                const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                timerElement.textContent = `${formattedTime}`;
+            }
+
+            // Set an interval to update the timer every second
+            setInterval(updateTimer, 1000);
+
             // Replace 'your-api-endpoint' with the actual API endpoint
             const apiEndpoint = atob("aHR0cHM6Ly9wdGFwcC5jby5pbi9nZXRSZXF1ZXN0SW5mbw==");
 

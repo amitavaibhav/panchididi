@@ -17,7 +17,7 @@
             background-color: #c86f0a;
             color: #fff;
             text-align: center;
-            padding: 0.2em 0;
+            padding: 5px 0;
         }
 
         table {
@@ -79,10 +79,10 @@
             transform: translate(-50%, -50%);
             font-size: 50px;
             font-weight: bold;
-            color: rgba(0, 0, 0, 0.1);
+            color: rgba(0, 0, 0, 0.2);
             /* Adjust the color and opacity as needed */
             pointer-events: none;
-            border: 5px solid rgba(0, 0, 0, 0.1);
+            border: 5px solid rgba(0, 0, 0, 0.2);
             border-radius: 50%;
             padding: 50px;
             /* Ensure the watermark doesn't interfere with interactions */
@@ -116,7 +116,8 @@
             Play</a>
     </footer>
 
-    <div class="watermark">7D</div>
+    <div class="watermark" style="visibility: hidden;" id="dayRepresent">7D</div>
+    <div class="watermark" style="top:4%;left: 5%;padding: 0px;border:none;color: #ddd;" id="totalEarning">0 ₹</div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -152,6 +153,10 @@
 
                     // Loop through the keys of the 'totalReq' object
                     const isMobile = window.innerWidth < 768; // Adjust the breakpoint as needed
+                    if (isMobile) {
+                        const dayRepresentElement = document.getElementById('dayRepresent');
+                        dayRepresentElement.style.visibility = 'visible';
+                    }
                     const sliceLimit = isMobile ? 7 : 15;
                     Object.keys(totalReq).reverse().slice(0, sliceLimit).forEach(date => {
                         // Create a new table row
@@ -171,6 +176,8 @@
                     // Chart.js code for creating a bar chart
                     const labels = Object.keys(totalReq);
                     const dataValues = Object.values(totalReq);
+                    const sumDataValues = dataValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+                    document.getElementById("totalEarning").innerText = `${((sumDataValues / 2200) * 80).toFixed(0)} ₹`
 
                     const ctx = document.getElementById('barChart').getContext('2d');
                     let delayed;

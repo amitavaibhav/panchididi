@@ -17,7 +17,7 @@
             background-color: #c86f0a;
             color: #fff;
             text-align: center;
-            padding: 5px 0;
+            padding: 1px 0;
         }
 
         table {
@@ -93,7 +93,7 @@
 <body>
 
     <header>
-        <h2 style="margin-bottom: 10px;">App Statistics</h2>
+        <p style="margin-bottom: 10px;font-weight: bold;font-size: 20px;">App Statistics</p>
         <div id="timer">00:00:00</div>
     </header>
     <canvas id="barChart"></canvas>
@@ -117,7 +117,7 @@
     </footer>
 
     <div class="watermark" style="visibility: hidden;" id="dayRepresent">7D</div>
-    <div class="watermark" style="top:4%;left: 5%;padding: 0px;border:none;color: #ddd;" id="totalEarning">0 ₹</div>
+    <div class="watermark" style="top:4%;left: 10%;padding: 0px;border:none;color: #ddd;font-size: 35px;" id="totalEarning">0 ₹</div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
